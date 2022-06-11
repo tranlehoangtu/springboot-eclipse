@@ -1,0 +1,11 @@
+Create MySQL database
+Create Maven project
+Configure Data Source Properties
+Code Domain Model Class
+Code Repository Interface
+Code Service Class
+Code Spring Boot Application Class
+Code REST Controller Class: RESTful CRUD API
+Test using curl (or POST MAN)
+
+--> Remember to push annotation

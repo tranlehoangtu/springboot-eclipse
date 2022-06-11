@@ -1,0 +1,29 @@
+package com.javacode;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class AppController {
+	
+	@GettMapping(value = "/")
+	public String home() {
+		System.out.println("Going home...");
+		
+		return "index";
+	}
+	
+	@GetMapping(value = "/register")
+	public String showForm(Model model) {
+		model.addAttribute("user", new User());
+		
+		return "register_form";
+	}
+	
+	@PostMapping(value = "/register")
+	public String submitForm() {
+		return "register_success";
+	}
+}

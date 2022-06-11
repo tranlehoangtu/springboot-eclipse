@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf">
+<head>
+<meta charset="UTF-8">
+<title>Contact List</title>
+</head>
+<body>
+	<h1>My Contact List - Themleaf</h1>
+	<table border="1" cellpadding="10">
+		<tr>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Province</th>
+		</tr>
+		<tr th:each="contact: ${contacts}">
+			<td th:text="${contact.name}" />
+			<td th:text="${contact.email}" />
+			<td th:text="${contact.province}" />
+		</tr>
+	</table>
+</body>
+</html>

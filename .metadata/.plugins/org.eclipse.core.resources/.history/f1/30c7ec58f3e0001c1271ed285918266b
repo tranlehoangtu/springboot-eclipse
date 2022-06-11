@@ -1,0 +1,22 @@
+package com.javacode;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class AppController {
+	
+	@RequestMapping(value = "/")
+	public String home() {
+		System.out.println("Going home...");
+		
+		return "index";
+	}
+	
+	@RequestMapping(value = "/register")
+	public String showForm() {
+		
+		return "registerForm";
+	}
+	
+}

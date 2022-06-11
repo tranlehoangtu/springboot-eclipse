@@ -1,0 +1,30 @@
+package com.javacode;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ProductService {
+
+	@Autowired
+	private ProductRepository productRepository;
+	
+	public List<Product> listAll() {
+		
+		return productRepository.findAll();
+	}
+	
+	public void save(Product product) {
+		productRepository.save(product);
+	}
+	
+	public Product getById(Integer id) {
+		
+		Product product = new Product();
+		
+		
+		
+		return product;
+	}
+	
+}
