@@ -1,5 +1,8 @@
 package com.javacode.TechPolyShop.controller.admin;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -9,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,10 +34,12 @@ public class AccountController {
 	public String add(Model model) {
 		AccountDTO accountDTO = new AccountDTO();
 		accountDTO.setIsEdit(false);
-		model.addAttribute("account", new AccountDTO());
+		
+		model.addAttribute("account", accountDTO);
+
 		return "admin/accounts/addOrEdit";
 	}
-	
+
 	@PostMapping(value = "saveOrUpdate")
 	public String saveOrUpdate(Model model, @Valid @ModelAttribute("account") AccountDTO accountDTO,
 			BindingResult result) {
@@ -47,47 +53,54 @@ public class AccountController {
 
 		model.addAttribute("message", "Account is Saved !");
 		accountService.save(entity);
+
 		return "forward:/admin/accounts";
 	}
 
-//	@GetMapping(value = "edit/{categoryId}")
-//	public String edit(Model model, @PathVariable("categoryId") Long categoryId) {
-//		Optional<Account> entityOpt = service.findById(categoryId);
-//		AccountDTO accountDTO = new AccountDTO();
-//
-//		if (entityOpt.isPresent()) {
-//			Account entity = entityOpt.get();
-//
-//			BeanUtils.copyProperties(entity, accountDTO);
-//			accountDTO.setIsEdit(true);
-//
-//			model.addAttribute("account", accountDTO);
-//
-//			return "admin/accounts/addOrEdit";
-//		}
-//		model.addAttribute("message", "Account is not existed !");
-//
-//		return "forward:/admin/accounts";
-//	}
-//
-//	@GetMapping(value = "delete/{categoryId}")
-//	public String delete(Model model, @PathVariable(name = "categoryId") Long categoryId) {
-//		if (service.findById(categoryId).isPresent()) {
-//			service.deleteById(categoryId);
-//			model.addAttribute("message", "Account is Deleted !");
-//		} else
-//			model.addAttribute("message", "Invalid Request !!");
-//
-//		return "forward:/admin/accounts/search";
-//	}
-//
-//	@RequestMapping(value = "")
-//	public String list(Model model) {
-//		List<Account> list = service.findAll();
-//
-//		model.addAttribute("accounts", list);
-//		return "admin/accounts/list";
-//	}
+	@RequestMapping(value = "")
+	public String list(Model model) {
+		List<Account> list = accountService.findAll();
+
+		model.addAttribute("accounts", list);
+		model.addAttribute("notify", "For presentation purpose, in this case we show password but we should not");
+
+		return "admin/accounts/list";
+	}
+
+	@GetMapping(value = "edit/{username}")
+	public String edit(Model model, @PathVariable("username") String username) {
+		Optional<Account> entityOpt = accountService.findById(username);
+		AccountDTO accountDTO = new AccountDTO();
+
+		if (entityOpt.isPresent()) {
+			Account entity = entityOpt.get();
+
+			BeanUtils.copyProperties(entity, accountDTO);
+			
+			accountDTO.setIsEdit(true);
+			accountDTO.setPassword("");
+			
+			model.addAttribute("account", accountDTO);
+
+			return "admin/accounts/addOrEdit";
+		}
+		model.addAttribute("message", "Account is not existed !");
+
+		return "forward:/admin/accounts";
+	}
+
+	@GetMapping(value = "delete/{username}")
+	public String delete(Model model, @PathVariable(name = "username") String username) {
+		if (accountService.findById(username).isPresent()) {
+			accountService.deleteById(username);
+			model.addAttribute("message", "Account is Deleted !");
+		} else
+			model.addAttribute("message", "Invalid Request !!");
+
+		return "forward:/admin/accounts";
+	}
+
+
 //
 //	@GetMapping(value = "search")
 //	public String search(Model model, @RequestParam(name = "name", required = false) String name) {

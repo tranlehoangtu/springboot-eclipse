@@ -10,23 +10,52 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.javacode.TechPolyShop.domain.Account;
 import com.javacode.TechPolyShop.repository.AccountRepository;
 import com.javacode.TechPolyShop.service.AccountService;
 
 @Service
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
 	private AccountRepository accountRepository;
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	public AccountServiceImpl(AccountRepository accountRepository) {
+	public AccountServiceImpl(AccountRepository accountRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.accountRepository = accountRepository;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+	}
+	
+	@Override
+	public Account login(String username, String password) {
+		Optional<Account> optExist = accountRepository.findById(username);
+		
+		if(optExist.isPresent() && bCryptPasswordEncoder.matches(password, optExist.get().getPassword())) {
+			optExist.get().setPassword("");
+			return optExist.get();
+		}
+		
+		return null;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public <S extends Account> S save(S entity) {
+		Optional<Account> optExist = findById(entity.getUsername());
+		
+		if(optExist.isPresent()) {
+			if(StringUtils.isEmpty(entity.getPassword())) {
+				entity.setPassword(optExist.get().getPassword());
+			} else {
+				entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+			}
+		} else {
+			entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+		}
+		
 		return accountRepository.save(entity);
 	}
 
@@ -163,7 +192,6 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public <S extends Account> List<S> findAll(Example<S> example, Sort sort) {
 		return accountRepository.findAll(example, sort);
-	}	
-	
-	
+	}
+
 }

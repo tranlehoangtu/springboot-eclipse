@@ -19,9 +19,10 @@
           >
             <div class="card">
               <div class="card-header">
-                <h2>Add New Account</h2>
+                <h2 th:text="${account.isEdit ? 'Update Account' : 'Add New Account'}"></h2>
               </div>
               <div class="card-body">
+                <input type="hidden" th:field="*{isEdit}" />
                 <div class="form-group">
                   <label for="username">Username</label>
                   <input
@@ -33,7 +34,10 @@
                     aria-describedby="usernameHUd"
                     placeholder="Username"
                   />
-                  <small id="usernameHUd" class="form-text text-muted"
+                  <small
+                    id="usernameHUd"
+                    th:if="${#fields.hasErrors('username')}"
+                    class="form-text text-muted"
                     >Username is invalid</small
                   >
                 </div>
@@ -48,7 +52,10 @@
                     aria-describedby="passwordHId"
                     placeholder="Password"
                   />
-                  <small id="passwordHId" class="form-text text-muted"
+                  <small
+                    id="passwordHId"
+                    th:if="${#fields.hasErrors('password')}"
+                    class="form-text text-muted"
                     >Password is invalid</small
                   >
                 </div>

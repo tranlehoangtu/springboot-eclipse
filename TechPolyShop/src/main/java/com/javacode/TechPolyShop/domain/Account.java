@@ -23,6 +23,6 @@ public class Account implements Serializable {
 	@Column(length = 30)
 	private String username;
 
-	@Column(length = 60, nullable = false)
+	@Column(columnDefinition = "varchar(100) not null")
 	private String password;
 }

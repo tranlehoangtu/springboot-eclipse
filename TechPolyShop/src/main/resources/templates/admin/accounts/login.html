@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+  <title>Login</title>
+</head>
+
+<body>
+  <main class="container">
+    <section class="row" layout:fragment="content">
+      <div class="col-4 offset-4 mt-4">
+        <form th:action="@{alogin}" th:object="${account}" method="post">
+          <div class="card">
+            <div class="card-header">
+              <h2>Login</h2>
+            </div>
+            <div class="card-body">
+              <div th:if="${message != null}" class="alert alert-primary" role="alert">
+                <i>[[${message}]]</i>
+              </div>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" th:field="*{username}" name="username" id="username"
+                  aria-describedby="usernameHUd" placeholder="Username" />
+                <small id="usernameHUd" th:if="${#fields.hasErrors('username')}" class="form-text text-muted">Username
+                  is invalid</small>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" class="form-control" th:field="*{password}" name="password" id="password"
+                  aria-describedby="passwordHId" placeholder="Password" />
+                <small id="passwordHId" th:if="${#fields.hasErrors('password')}" class="form-text text-muted">Password
+                  is invalid</small>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" value="false">
+                  Remember Me
+                </label>
+              </div>
+            </div>
+            <div class="card-footer text-muted">
+              <button type="reset" class="btn btn-secondary">Reset</button>
+              <button class="btn btn-primary"><i class="fas fa-sign-in-alt mr-1"></i>Login</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
