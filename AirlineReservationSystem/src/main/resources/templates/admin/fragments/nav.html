@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
   <head></head>
   <body>
     <div th:fragment="nav">
-      <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="#">H1Cr</a>
+      <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+          <img src="/images/logo.png" alt="" width="80px" />
+        </a>
         <button
           class="navbar-toggler d-lg-none"
           type="button"
@@ -27,22 +33,32 @@
               <a class="nav-link" href="#">Flight</a>
             </li>
             <li>
-              <a class="nav-link" href="#">Login</a>
+              <a class="nav-link" href="#" th:if="${session.username == null}"
+                >Login</a
+              >
+              <a
+                class="nav-link"
+                th:href="@{../../signout}"
+                th:unless="${session.username == null}"
+                >Sign Out</a
+              >
             </li>
             <li>
-              <a class="nav-link" href="#">Hi Guest</a>
+              <a class="nav-link" href="#" id="userInformation"></a>
             </li>
+            <script th:inline="javascript">
+              /*<![CDATA[*/
+
+              var username = /*[[${session.username}]]*/ "default";
+              if (username != null) {
+                const userInformation =
+                  document.getElementById("userInformation");
+                userInformation.innerText = "Hello " + username;
+              } else userInformation.innerText = "Hello Guest";
+
+              /*]]>*/
+            </script>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input
-              class="form-control mr-sm-2"
-              type="text"
-              placeholder="Search"
-            />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-              Search
-            </button>
-          </form>
         </div>
       </nav>
     </div>

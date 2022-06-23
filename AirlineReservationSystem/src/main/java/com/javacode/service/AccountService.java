@@ -70,4 +70,8 @@ public interface AccountService {
 
 	<S extends Account> S save(S entity);
 
+	boolean signup(String username, String password, String repassword);
+
+	boolean login(String username, String password);
+
 }

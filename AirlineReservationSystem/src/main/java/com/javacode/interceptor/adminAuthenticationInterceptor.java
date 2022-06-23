@@ -19,7 +19,9 @@ public class adminAuthenticationInterceptor implements HandlerInterceptor{
 			throws Exception {
 		System.out.println("PreHandle: " + request.getRequestURI());
 		
-		if(session.getAttribute("username") != null) return true;
+		if(session.getAttribute("username") != null) {
+			return true;
+		}
 		
 		session.setAttribute("redirect-uri", request.getRequestURI());
 		response.sendRedirect("/alogin");

@@ -70,4 +70,16 @@ public interface FlightService {
 
 	<S extends Flight> S save(S entity);
 
+	List<Flight> findByFlightNameContaining(String name);
+
+	List<Flight> findByFlightNameContainingAndFlightNoContaining(String name, String id);
+
+	List<Flight> findByFlightNoContaining(String id);
+
+	Page<Flight> findByFlightNameContaining(String name, Pageable pageable);
+
+	Page<Flight> findByFlightNameContainingAndFlightNoContaining(String name, String id, Pageable pageable);
+
+	Page<Flight> findByFlightNoContaining(String id, Pageable pageable);
+
 }

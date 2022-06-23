@@ -24,6 +24,36 @@ public class FlightServiceImpl implements FlightService {
 	public FlightServiceImpl(FlightRepository flightRespository) {
 		this.flightRespository = flightRespository;
 	}
+	// Return List of Flight
+	@Override
+	public List<Flight> findByFlightNoContaining(String id) {
+		return flightRespository.findByFlightNoContaining(id);
+	}
+	
+	@Override
+	public List<Flight> findByFlightNameContainingAndFlightNoContaining(String name, String id) {
+		return flightRespository.findByFlightNameContainingAndFlightNoContaining(name, id);
+	}
+	
+	@Override
+	public List<Flight> findByFlightNameContaining(String name) {
+		return flightRespository.findByFlightNameContaining(name);
+	}
+	
+	// Page<List>
+	@Override
+	public Page<Flight> findByFlightNameContaining(String name, Pageable pageable) {
+		return flightRespository.findByFlightNameContaining(name, pageable);
+	}
+	
+	@Override
+	public Page<Flight> findByFlightNoContaining(String id, Pageable pageable) {
+		return flightRespository.findByFlightNoContaining(id, pageable);
+	}
+	@Override
+	public Page<Flight> findByFlightNameContainingAndFlightNoContaining(String name, String id, Pageable pageable) {
+		return flightRespository.findByFlightNameContainingAndFlightNoContaining(name, id, pageable);
+	}
 
 	@Override
 	public <S extends Flight> S save(S entity) {

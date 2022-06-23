@@ -6,6 +6,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\tranl\Desktop\SpringBoot\Eclipse\Spring-Securiity"/>
 			<item value="C:\Users\tranl\Desktop\SpringBoot\Eclipse\SpringBootFormExample"/>
 			<item value="C:\Users\tranl\Desktop\SpringBoot\Eclipse\spring-boot-stater-web"/>
 			<item value="C:\Users\tranl\Desktop\SpringBoot\Eclipse\Restful-CRUD"/>

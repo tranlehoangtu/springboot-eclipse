@@ -26,9 +26,10 @@
       integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/css/admin.css" />
   </head>
   <body>
-
+    <main class="container-fluid">
       <header class="row">
         <div class="col">
           <div th:replace="admin/fragments/header :: header"></div>
@@ -39,16 +40,14 @@
           <div th:replace="admin/fragments/nav :: nav"></div>
         </div>
       </nav>
-      <main class="container">
-      	<div layout:fragment="content"></div>
-      </main>
+      <div layout:fragment="content"></div>
+
       <footer class="row">
         <div class="col">
           <div th:replace="admin/fragments/footer :: footer"></div>
         </div>
       </footer>
-
-
+    </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
