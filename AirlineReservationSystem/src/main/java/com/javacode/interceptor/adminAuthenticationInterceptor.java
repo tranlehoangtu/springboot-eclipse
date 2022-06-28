@@ -17,7 +17,6 @@ public class adminAuthenticationInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("PreHandle: " + request.getRequestURI());
 		
 		if(session.getAttribute("username") != null) {
 			return true;

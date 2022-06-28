@@ -38,4 +38,9 @@ button {
     height: calc(100% - var(--topNavbarHeight));
     top: var(--topNavbarHeight);
   }
+
+  .form-control {
+    display: inline-block;
+    width: inherit;
+  }
 }

@@ -1,6 +1,5 @@
 package com.javacode.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -8,18 +7,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.javacode.interceptor.adminAuthenticationInterceptor;
 import com.javacode.interceptor.siteAuthenticationInterceptor;
 
-@Configuration
+import lombok.RequiredArgsConstructor;
+
+@Configuration @RequiredArgsConstructor
 public class AuthenticationInterceptorConfig implements WebMvcConfigurer {
 
-	private adminAuthenticationInterceptor adminAuthenticationInterceptor;
-	private siteAuthenticationInterceptor siteAuthenticationInterceptor;
-
-	@Autowired
-	public AuthenticationInterceptorConfig(adminAuthenticationInterceptor adminAuthenticationInterceptor,
-			siteAuthenticationInterceptor siteAuthenticationInterceptor) {
-		this.adminAuthenticationInterceptor = adminAuthenticationInterceptor;
-		this.siteAuthenticationInterceptor = siteAuthenticationInterceptor;
-	}
+	private final adminAuthenticationInterceptor adminAuthenticationInterceptor;
+	private final siteAuthenticationInterceptor siteAuthenticationInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

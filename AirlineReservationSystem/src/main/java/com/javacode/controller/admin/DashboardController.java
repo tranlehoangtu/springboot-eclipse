@@ -1,43 +1,33 @@
 package com.javacode.controller.admin;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.javacode.domain.Account;
-import com.javacode.model.AccountDTO;
-import com.javacode.service.AccountService;
+import com.javacode.domain.Flight;
+import com.javacode.service.FlightService;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
-@RequestMapping
 @RequiredArgsConstructor
-public class DashboardController {
-	private final AccountService accountService;
-
+@Controller
+@RequestMapping("admin/dashboard")
+public class DashBoardController {
+	private final FlightService flightService;
+	
 	@GetMapping(value = "")
 	public String list(Model model) {
+		Pageable pageable = PageRequest.of(0, 10);
+		Page<Flight> listEntity = flightService.findAll(pageable);
 
-		List<Account> listEntity = accountService.findAll();
-
-		List<AccountDTO> list = new ArrayList<AccountDTO>();
-
-		for (Account item : listEntity) {
-			AccountDTO replaceItem = new AccountDTO();
-			BeanUtils.copyProperties(item, replaceItem);
-
-			list.add(replaceItem);
-		}
-
-		model.addAttribute("accounts", list);
+		model.addAttribute("flights", listEntity);
 		
-		return "admin/accounts/list";
+		return "/admin/dashboard/index";
 	}
 }

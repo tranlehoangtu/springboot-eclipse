@@ -42,6 +42,8 @@ charts.forEach(function (chart) {
 
 $(document).ready(function () {
   $(".data-table").each(function (_, table) {
-    $(table).DataTable();
+    $(table).DataTable({
+      lengthMenu: [5, 10],
+    });
   });
 });

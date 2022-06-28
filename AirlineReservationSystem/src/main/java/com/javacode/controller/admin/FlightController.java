@@ -1,6 +1,7 @@
 package com.javacode.controller.admin;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +37,12 @@ public class FlightController {
 	@Autowired
 	public FlightController(FlightService flightService) {
 		this.flightService = flightService;
+	}
+	
+	@GetMapping(value = "test")
+	public String test(Model model) {
+		model.addAttribute("flight", new FlightDTO());
+		return "admin/flights/test";
 	}
 
 	@GetMapping(value = "add")
@@ -94,57 +101,65 @@ public class FlightController {
 		return "forward:/admin/flights";
 	}
 
+//	@RequestMapping(value = "")
+//	public String list(Model model, @RequestParam(name = "sbName", required = false) String flightName,
+//			@RequestParam(name = "sbNo", required = false) String flightNo,
+//			@RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size) {
+//
+//		int currentPage = page.orElse(1);
+//		int pageSize = size.orElse(5);
+//
+//		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("FlightNo"));
+//		Page<Flight> pageEntity = null;
+//
+//		if (StringUtils.hasText(flightName) && StringUtils.hasText(flightNo)) {
+//			pageEntity = flightService.findByFlightNameContainingAndFlightNoContaining(flightName, flightNo, pageable);
+//			
+//			model.addAttribute("sbNo", flightNo);
+//			model.addAttribute("sbName", flightName);
+//		} else if (StringUtils.hasText(flightNo)) {
+//			pageEntity = flightService.findByFlightNoContaining(flightNo, pageable);
+//			model.addAttribute("sbNo", flightNo);
+//			
+//		} else if (StringUtils.hasText(flightName)) {
+//			pageEntity = flightService.findByFlightNameContaining(flightName, pageable);
+//			model.addAttribute("sbName", flightName);
+//
+//		} else {
+//			pageEntity = flightService.findAll(pageable);
+//		}
+//
+//		int totalPages = pageEntity.getTotalPages();
+//
+//		if (totalPages > 0) {
+//			int start = Math.max(1, currentPage - 2);
+//			int end = Math.min(currentPage + 2, totalPages);
+//
+//			if (totalPages > 5) {
+//				if (end == totalPages)
+//					start = end - 5;
+//				else if (start == 1)
+//					end = start + 5;
+//			}
+//
+//			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+//			model.addAttribute("pageNumbers", pageNumbers);
+//		}
+//
+//		if (!pageEntity.hasContent()) {
+//			model.addAttribute("message", "No Flight Found!");
+//		}
+//
+//		model.addAttribute("pageEntity", pageEntity);
+//
+//		return "admin/flights/list";
+//	}
+	
 	@RequestMapping(value = "")
-	public String list(Model model, @RequestParam(name = "sbName", required = false) String flightName,
-			@RequestParam(name = "sbNo", required = false) String flightNo,
-			@RequestParam(name = "page") Optional<Integer> page, @RequestParam(name = "size") Optional<Integer> size) {
-
-		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(5);
-
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("FlightNo"));
-		Page<Flight> pageEntity = null;
-
-		if (StringUtils.hasText(flightName) && StringUtils.hasText(flightNo)) {
-			pageEntity = flightService.findByFlightNameContainingAndFlightNoContaining(flightName, flightNo, pageable);
-			
-			model.addAttribute("sbNo", flightNo);
-			model.addAttribute("sbName", flightName);
-		} else if (StringUtils.hasText(flightNo)) {
-			pageEntity = flightService.findByFlightNoContaining(flightNo, pageable);
-			model.addAttribute("sbNo", flightNo);
-			
-		} else if (StringUtils.hasText(flightName)) {
-			pageEntity = flightService.findByFlightNameContaining(flightName, pageable);
-			model.addAttribute("sbName", flightName);
-
-		} else {
-			pageEntity = flightService.findAll(pageable);
-		}
-
-		int totalPages = pageEntity.getTotalPages();
-
-		if (totalPages > 0) {
-			int start = Math.max(1, currentPage - 2);
-			int end = Math.min(currentPage + 2, totalPages);
-
-			if (totalPages > 5) {
-				if (end == totalPages)
-					start = end - 5;
-				else if (start == 1)
-					end = start + 5;
-			}
-
-			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-
-		if (!pageEntity.hasContent()) {
-			model.addAttribute("message", "No Flight Found!");
-		}
-
-		model.addAttribute("pageEntity", pageEntity);
-
+	public String list(Model model) {
+		List<Flight> flightEntity = flightService.findAll();
+		model.addAttribute("flights", flightEntity);
+		
 		return "admin/flights/list";
 	}
 

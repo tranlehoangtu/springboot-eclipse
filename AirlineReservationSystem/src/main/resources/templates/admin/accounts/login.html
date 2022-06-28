@@ -3,14 +3,14 @@
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{admin/dashboardLayout.html}"
+  layout:decorate="~{admin/layout.html}"
 >
   <head>
     <title>Login</title>
   </head>
 
   <body>
-    <section class="row" layout:fragment="content" id="section">
+    <section class="mt-5 pt-3" layout:fragment="content" id="section">
       <div class="col-4 offset-4 mt-4">
         <form th:action="@{alogin}" th:object="${account}" method="post">
           <div class="card">

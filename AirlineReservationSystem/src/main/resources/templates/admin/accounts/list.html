@@ -35,11 +35,13 @@
                     />
                   </th>
                   <th>Username</th>
-                  <th>Password</th>
+                  <th>Age</th>
+                  <th>Address</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="item : ${flights}">
+                <tr th:each="item : ${accounts}">
                   <td>
                     <input
                       type="checkbox"
@@ -48,20 +50,21 @@
                     />
                   </td>
                   <td th:text="${item.username}">Username</td>
-                  <td th:text="${item.password}">Password</td>
+                  <td></td>
+                  <td></td>
                   <td>
                     <a
-                      th:href="@{'/admin/accounts/view/' + ${item.flightNo}}"
+                      th:href="@{'/admin/accounts/view/' + ${item.username}}"
                       class="btn btn-outline-info"
                       ><i class="fas fa-info"></i
                     ></a>
                     <a
-                      th:href="@{'/admin/accounts/edit/' + ${item.flightNo}}"
+                      th:href="@{'/admin/accounts/edit/' + ${item.username}}"
                       class="btn btn-outline-warning"
                       ><i class="fas fa-edit"></i
                     ></a>
                     <a
-                      th:href="@{'/admin/accounts/delete/' + ${item.flightNo}}"
+                      th:href="@{'/admin/accounts/delete/' + ${item.username}}"
                       class="btn btn-outline-danger"
                       ><i class="fas fa-recycle"></i
                     ></a>

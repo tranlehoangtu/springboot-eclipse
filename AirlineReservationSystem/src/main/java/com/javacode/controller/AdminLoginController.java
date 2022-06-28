@@ -103,7 +103,7 @@ public class AdminLoginController {
 				return "redirect:" + redirectUri;
 			}
 
-			return "redirect:/dashboard";
+			return "redirect:/admin/dashboard";
 		}
 
 		model.addAttribute("message", "Wrong Username or Password");
